@@ -1,7 +1,17 @@
 # Laravel-Docker
 Laravel in Dcoker Compose
 
+คำสั่ง ต่างๆ 
+docker ps //ดู container ที่ทำงานอยู่
+docker ps -a //ดู container ทั้งหมดที่มีอยู่ในระบบ
+
 # Setup
+run docker 
+
+docker-compose up -d //เพื่อลง images ตามไฟล์ docker-compose
+
+docker-compose build //เป็นการ run container เพื่อใช้งาน 
+
 
 Copy File Env  
 `
