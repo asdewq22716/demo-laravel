@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/detail-laravel', function () {
+    return "อธิบายการทำงาน laravel";
+});
+
+//name คือparamiter สำหรับส่งข้อมูล เป็น พาร์ต
+Route::get('/blog{name}', function () {
+    return "บทความทั้งหมด";
+});
