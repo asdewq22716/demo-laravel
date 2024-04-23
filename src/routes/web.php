@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/detail-laravel', function () {
+Route::get('/detail', function () {
     return "อธิบายการทำงาน laravel";
 });
 
