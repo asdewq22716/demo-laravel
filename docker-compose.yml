@@ -21,7 +21,6 @@ services:
       - php
     networks:
       - laravel
-
   php:
     build:
       context: .
@@ -104,3 +103,4 @@ services:
     restart: always
     networks:
       - laravel
+  

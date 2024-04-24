@@ -30,8 +30,9 @@ npm:
     $(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) run --rm npm install
 
 artisan:
+    #docker-compose exec php sh //เข้าถึงที่เก็บไฟล์ของContainer ก่อนจึงค่อยสร้าง Controller
     #docker-compose exec app //ใช้คำสั่งนี้ในการเข้าถึงfolder app ในdocker และทำการติดตัง controller
     #รูปแบบการใช้งาน 
     #docker-compose exec app php artisan make:controller ชื่อของControllerที่จะสร้าง
-    #docker-compose exec app php artisan make:controller AdminController
+    #docker-compose exec app php artisan make:controller Class_file_name
 
