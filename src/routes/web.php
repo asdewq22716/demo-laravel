@@ -33,3 +33,5 @@ Route::fallback(function () {
 Route::get('/blog', [AdminController::class, 'index'])->name('blog');
 
 Route::get('/about', [AdminController::class, 'about'])->name('about');
+
+Route::get('/form',[AdminController::class,'create'])->name('form');

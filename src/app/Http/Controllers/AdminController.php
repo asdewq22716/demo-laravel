@@ -43,4 +43,8 @@ class AdminController extends Controller
         /* การส่งตัวแปรเข้าที่หน้า about ใช้function compactในการส่งเข้าไป */
         return view("about", compact('name', 'date'));
     }
+    function create()
+    {
+        return view('form');
+    }
 }
