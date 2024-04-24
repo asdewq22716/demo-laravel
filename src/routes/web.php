@@ -14,14 +14,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+   // return "<a href='admin/user'>Login</a>";
+   return view('home');
 });
 
-Route::get('/detail', function () {
-    return "อธิบายการทำงาน laravel";
-});
+Route::get('/about', function () {
+   // return "อธิบายการทำงาน laravel";
+   $name="อัณณพ เลิศสันติคุปต์";
+   $date="24 เมษายน 2567";
+   /* การส่งตัวแปรเข้าที่หน้า about ใช้function compactในการส่งเข้าไป */
+   return view("about",compact('name','date'));
+})->name('about');
 
 //name คือparamiter สำหรับส่งข้อมูล เป็น พาร์ต
-Route::get('/blog{name}', function () {
-    return "บทความทั้งหมด";
+Route::get('/blog', function () {
+    return view("blog");
+})->name('blog');
+
+
+
+Route::get('admin/user', function () {
+    return "ยินดีตอนรับ Admin";
+})->name('login');
+
+Route::fallback(function(){
+    return "<h1>ไม่พบหน้าเว็บ</h1>";
 });
