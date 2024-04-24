@@ -3,15 +3,31 @@
 @section('content')
     <h2>บทความทั้งหมด</h2>
     <hr>
-    @foreach ($blogs as $key => $value)
-        <h4>{{ $value['title'] }}</h4>
-        <p>{{ $value['content'] }}</p>
-        <p>{{ $value['status'] }}</p>
-        @if ($value['status'] == true)
-            <p class="text text-success">เผยแพร่</p>
-        @else
-            <p class="text text-danger">ฉบับล่าง</p>
-        @endif
-        <hr>
-    @endforeach
+    <table class="table ">
+        <thead>
+            <tr>
+                <th scope="col">ชื่อบทความ</th>
+                <th scope="col">เนื้อหา</th>
+                <th scope="col">สถานะ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($blogs as $key => $value)
+                <tr>
+                    <td>{{ $value['title'] }}</td>
+                    <td>{{ $value['content'] }}</td>
+                    @if ($value['status'] == true)
+                        <td>
+                            <p class="text text-success">เผยแพร่</p>
+                        </td>
+                    @else
+                        <td>
+                            <p class="text text-danger">ฉบับล่าง</p>
+                        </td>
+                    @endif
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <hr>
 @endsection
