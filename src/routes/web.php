@@ -20,7 +20,7 @@ Route::get('/', function () {
             'how' => 'ทำงานอย่างไร'
         ]
     ];
-    return view('home', compact('Route', 'Controler'));
+    return view('home', compact('Route', 'Controler')); //ส่งตัวแปรไป2ตัว
 });
 // Route มีการทำงาน 2 แบบ คือ 1)ทำงานที่ Route คือfunction 2)ไปทำงานที่ Controller 
 
@@ -34,6 +34,8 @@ Route::get('/blog', [AdminController::class, 'index'])->name('blog');
 
 Route::get('/about', [AdminController::class, 'about'])->name('about');
 
-Route::get('/form',[AdminController::class,'create'])->name('form');
+Route::get('/form', [AdminController::class, 'create'])->name('form');
 
-Route::get('/insert',[AdminController::class,'insert']);
+Route::post('/insert', [AdminController::class, 'insert'])->name('insert');
+
+Route::get('delete/{id}', [AdminController::class, 'delete'])->name('delete');

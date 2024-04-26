@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -23,17 +25,12 @@ class AdminController extends Controller
                 "title" => "บทความที่ 3",
                 "content" => "เนื้อหาบาความที่ 3",
                 "status" => false,
-            ], [
-                "title" => "บทความที่ 4",
-                "content" => "เนื้อหาบาความที่ 4",
-                "status" => false,
-            ], [
-                "title" => "บทความที่ 5",
-                "content" => "เนื้อหาบาความที่ 5",
-                "status" => true,
             ]
         ];
-        return view("blog", compact('blogs'));
+
+        //การดึงข้อมูลจากtable 
+        $blogs1 = DB::table('blogs')->get();
+        return view("blog", compact('blogs1'));
     }
     function about()
     {
@@ -50,10 +47,24 @@ class AdminController extends Controller
 
     //เรียกใช้ class Requests
     function insert(Request $request)
-    {//ห้ามเป็นค่าว่าง required 
-        $request = validator([ //คือการตรวจสอบข้อมูลที่ส่งเข้ามา
-            'title' => 'required|max:50',
-            'content' => 'required'
-        ]);
+    { //ห้ามเป็นค่าว่าง required 
+        $request->validate(
+            [ //คือการตรวจสอบข้อมูลที่ส่งเข้ามา
+                'title' => 'required|max:50',
+                'content' => 'required'
+            ],
+            [
+                'title.required' => 'กรุณาป้อนชื่อบทความ',
+                'title.max' => 'ชื่อบทความไม่ควรเกิน 50 ตัวอักษร',
+                'content.required' => 'กรุณาป้อนชื่อบทความของคุณ'
+            ]
+        );
+    }
+    function delete($id)
+    {
+        // dd($id); ดีบัก
+        //การลบข้อมูล
+        DB::table('blogs')->where('id', $id)->delete();
+        return redirect('/blog');
     }
 }

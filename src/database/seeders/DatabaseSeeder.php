@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        //เรียกใช้งาน ไฟล์ BlogSeeder
+        $this->call([
+            BlogSeeder::class
+        ]);
     }
 }

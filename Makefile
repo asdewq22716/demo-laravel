@@ -36,3 +36,8 @@ artisan:
     #docker-compose exec app php artisan make:controller ชื่อของControllerที่จะสร้าง
     #docker-compose exec app php artisan make:controller Class_file_name
 
+    #php artisan make:model Blog -m การสร้างmodel เพื่อติดต่อฐานข้อมูล
+    #php artisan migrate สร้างโครงสร้างตาราง
+    #php artisan make:factory BlogFactory //กำหนดข้อมูลที่จากfake ขึ้นมา
+    #php artisan make:seeder BlogSeeder
+    #php artisan db:seed

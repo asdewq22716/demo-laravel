@@ -9,14 +9,19 @@
                 <th scope="col">ชื่อบทความ</th>
                 <th scope="col">เนื้อหา</th>
                 <th scope="col">สถานะ</th>
+                <th>จัดการ</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($blogs as $key => $value)
+            {{--   <pre>
+            {{ print_r($blogs1) }}
+        </pre> --}}
+            @foreach ($blogs1 as $key => $value)
                 <tr>
-                    <td>{{ $value['title'] }}</td>
-                    <td>{{ $value['content'] }}</td>
-                    @if ($value['status'] == true)
+                    <td>{{ $value->title }}</td>
+                    {{-- Str::limit การจำกัดจำนวนการเเสดงผล --}}
+                    <td>{{ Str::limit($value->content, 10) }}</td>
+                    @if ($value->status == true)
                         <td>
                             <p class="text text-success">เผยแพร่</p>
                         </td>
@@ -25,9 +30,15 @@
                             <p class="text text-danger">ฉบับล่าง</p>
                         </td>
                     @endif
+                    <td>
+                        <a onclick="return confirm('คุณต้องการลบบทความหรือไม่ ?');" href="{{ route('delete', $value->id) }}" class="btn btn-danger">
+                            ลบรายการ {{ $value->id }}
+                        </a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     <hr>
 @endsection
+
