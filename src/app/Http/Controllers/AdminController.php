@@ -47,4 +47,13 @@ class AdminController extends Controller
     {
         return view('form');
     }
+
+    //เรียกใช้ class Requests
+    function insert(Request $request)
+    {//ห้ามเป็นค่าว่าง required 
+        $request = validator([ //คือการตรวจสอบข้อมูลที่ส่งเข้ามา
+            'title' => 'required|max:50',
+            'content' => 'required'
+        ]);
+    }
 }
