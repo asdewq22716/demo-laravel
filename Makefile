@@ -44,4 +44,10 @@ artisan:
 
     # การเรียกใช้ไม่ต้องเข้าถึงไฟล์สามารถเรียกใช้ได้เลย 2ตัวใช้งานคู่กัน
     #docker-compose run composer require laravel/ui
-    #docker-compose exec php artisan ui vue --auth
+
+
+    #php artisan ui bootstarp --auth สำหรับ bootstrap
+
+
+    #docker-compose exec php artisan ui vue --auth //สำหรับ vue
+    #php artisan ui vue --clean //ใช้ในการลบ
