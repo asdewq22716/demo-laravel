@@ -41,3 +41,7 @@ artisan:
     #php artisan make:factory BlogFactory //กำหนดข้อมูลที่จากfake ขึ้นมา
     #php artisan make:seeder BlogSeeder
     #php artisan db:seed
+
+    # การเรียกใช้ไม่ต้องเข้าถึงไฟล์สามารถเรียกใช้ได้เลย 2ตัวใช้งานคู่กัน
+    #docker-compose run composer require laravel/ui
+    #docker-compose exec php artisan ui vue --auth
