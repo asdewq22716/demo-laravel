@@ -29,14 +29,19 @@ services:
     restart: always
     volumes:
       - ./src:/var/www/html:delegated
+    links:
+      - db
     networks:
       - laravel
 
-  mysql_db:
+  db:
     image: mariadb:11.3.2
     container_name: mysql
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     tty: true
+    ports:
+      - 3306:3306
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
@@ -44,6 +49,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./mysql:/var/lib/mysql
+      - persistent_laravel:/var/lib/mysql
     networks:
       - laravel
 
@@ -51,11 +57,14 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart: always
+    links:
+      - db:db
     environment:
-      PMA_ARBITRARY: 1
-      UPLOAD_LIMIT: 2000000000000
+        MYSQL_USER: ${DB_USERNAME}
+        MYSQL_PASSWORD:  ${DB_PASSWORD}
+        MYSQL_ROOT_PASSWORD:  ${DB_PASSWORD}
     depends_on:
-      - mysql_db
+      - db
     ports:
       - "81:80"
     networks:
@@ -103,4 +112,6 @@ services:
     restart: always
     networks:
       - laravel
+volumes:
+    persistent_laravel:
   

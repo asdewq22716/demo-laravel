@@ -1,65 +1,29 @@
-FROM php:8.1-fpm-alpine
+# เลือกภาพพื้นฐานที่มี PHP 8.2 และ Apache
+FROM php:8.2-apache
 
-# Copy File Config
-COPY ./.docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+# ตั้งค่า timezone เป็น UTC
+RUN echo "date.timezone = UTC" > /usr/local/etc/php/conf.d/timezone.ini
 
-# Use the default production configuration
-COPY ./.docker/php/php.ini "$PHP_INI_DIR/php.ini"
+# เพิ่ม extension ที่จำเป็น (ตัวอย่างเช่น mysqli, pdo, pdo_mysql)
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# ADD and set Group
-RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
+# อัปเดตและติดตั้งเครื่องมือที่จำเป็น
+RUN apt-get update && \
+    apt-get install -y \
+    libzip-dev \
+    zip
 
-# Create folder to run
-RUN mkdir -p /var/www/html
+# ติดตั้งส่วนขยาย zip
+RUN docker-php-ext-install zip
 
-# Set Profile
-RUN chown laravel:laravel /var/www/html
+# ลบไฟล์ index.html เดิมของ Apache ที่มีอยู่
+RUN rm -rf /var/www/html/index.html
 
-# Work in the specific space
-WORKDIR /var/www/html
-
-# Install dependencies
-RUN apk add --no-cache \
-    icu-dev \
-    libintl \
-    freetype \
-    freetype-dev \
-    libjpeg-turbo \
-    libjpeg-turbo-dev \
-    libpng \
-    libpng-dev \
-    libwebp \
-    libwebp-dev
-
-# Install intl
-RUN docker-php-ext-install intl
-
-RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg \
-    --with-webp
-
-RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
-    docker-php-ext-install -j${NPROC} gd 
-
-RUN apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
-
-RUN docker-php-ext-install pdo pdo_mysql
-
-#run composer install
-#RUN docker-compose run composer install 
-
-#RUN docker-compose run npm install
-
-# Copy existing application directory contents
+# สำเนาไฟล์ของโปรเจ็กต์ PHP ไปยังโฟลเดอร์ที่ถูกต้องใน container
 COPY ./src /var/www/html
 
-# Copy existing application directory permissions
-COPY --chown=laravel:laravel ./src /var/www/html
+# กำหนดสิทธิ์ให้กับโฟลเดอร์ที่ถูกสำเนาเพื่อให้ Apache สามารถเข้าถึงไฟล์ได้
+RUN chown -R www-data:www-data /var/www/html
 
-# Change current user to www
-USER laravel
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# เปิดการใช้งาน rewrite module ของ Apache
+RUN a2enmod rewrite
