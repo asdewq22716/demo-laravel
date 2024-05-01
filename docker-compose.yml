@@ -12,7 +12,7 @@ services:
     container_name: nginx
     restart: always
     ports:
-      - "8002:80"
+      - "8010:80"
     volumes:
       - ./src:/var/www/html:delegated
       - ./logs:/var/log/nginx
@@ -27,6 +27,7 @@ services:
       dockerfile: ./.docker/php/Dockerfile
     container_name: php
     restart: always
+    user: "laravel"   # กำหนดผู้ใช้ laravel ที่จะใช้รัน container
     volumes:
       - ./src:/var/www/html:delegated
     links:

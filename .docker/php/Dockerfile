@@ -1,6 +1,8 @@
 # เลือกภาพพื้นฐานที่มี PHP 8.2 และ Apache
 FROM php:8.2-apache
 
+# Add laravel user
+RUN useradd -ms /bin/bash laravel
 # ตั้งค่า timezone เป็น UTC
 RUN echo "date.timezone = UTC" > /usr/local/etc/php/conf.d/timezone.ini
 
